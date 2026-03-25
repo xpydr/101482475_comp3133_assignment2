@@ -1,0 +1,111 @@
+<div class="mx-auto max-w-2xl px-4 py-8">
+  <div class="mb-6 flex items-center gap-4">
+    <a [routerLink]="employeeId ? ['/employees', employeeId] : '/employees'" class="text-sm text-indigo-600 hover:underline">← Back</a>
+  </div>
+  <h1 class="mb-6 text-2xl font-semibold text-slate-900">Update employee</h1>
+
+  @if (loading()) {
+    <p class="text-slate-600">Loading…</p>
+  } @else if (error() && !form.dirty) {
+    <p class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-800">{{ error() }}</p>
+  } @else {
+    @if (error()) {
+      <p class="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-800">{{ error() }}</p>
+    }
+    <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div class="grid gap-4 sm:grid-cols-2">
+        <label class="block">
+          <span class="mb-1 block text-sm font-medium text-slate-700">First name</span>
+          <input
+            type="text"
+            formControlName="first_name"
+            class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          />
+        </label>
+        <label class="block">
+          <span class="mb-1 block text-sm font-medium text-slate-700">Last name</span>
+          <input
+            type="text"
+            formControlName="last_name"
+            class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          />
+        </label>
+      </div>
+      <label class="block">
+        <span class="mb-1 block text-sm font-medium text-slate-700">Email</span>
+        <input
+          type="email"
+          formControlName="email"
+          class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+        />
+      </label>
+      <label class="block">
+        <span class="mb-1 block text-sm font-medium text-slate-700">Gender (optional)</span>
+        <select
+          formControlName="gender"
+          class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+        >
+          <option value="">—</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </label>
+      <label class="block">
+        <span class="mb-1 block text-sm font-medium text-slate-700">Designation</span>
+        <input
+          type="text"
+          formControlName="designation"
+          class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+        />
+      </label>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <label class="block">
+          <span class="mb-1 block text-sm font-medium text-slate-700">Salary (min 1000)</span>
+          <input
+            type="number"
+            formControlName="salary"
+            min="1000"
+            step="1"
+            class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          />
+        </label>
+        <label class="block">
+          <span class="mb-1 block text-sm font-medium text-slate-700">Date of joining</span>
+          <input
+            type="date"
+            formControlName="date_of_joining"
+            class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          />
+        </label>
+      </div>
+      <label class="block">
+        <span class="mb-1 block text-sm font-medium text-slate-700">Department</span>
+        <input
+          type="text"
+          formControlName="department"
+          class="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+        />
+      </label>
+      <label class="block">
+        <span class="mb-1 block text-sm font-medium text-slate-700">Replace photo (optional)</span>
+        <input
+          type="file"
+          accept="image/*"
+          (change)="onPhotoSelected($event)"
+          class="block w-full text-sm text-slate-600 file:mr-4 file:rounded-lg file:border-0 file:bg-indigo-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-indigo-700 hover:file:bg-indigo-100"
+        />
+      </label>
+      <div class="flex gap-3 pt-2">
+        <button
+          type="submit"
+          [disabled]="submitting()"
+          class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-500 disabled:opacity-50"
+        >
+          {{ submitting() ? 'Saving…' : 'Save changes' }}
+        </button>
+        <a [routerLink]="['/employees', employeeId]" class="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">Cancel</a>
+      </div>
+    </form>
+  }
+</div>

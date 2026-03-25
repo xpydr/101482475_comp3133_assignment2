@@ -1,0 +1,56 @@
+<div class="mx-auto max-w-6xl px-4 py-8">
+  <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+    <h1 class="text-2xl font-semibold text-slate-900">Employees</h1>
+    <div class="flex flex-wrap gap-2">
+      <a
+        routerLink="/employees/search"
+        class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50"
+      >
+        Search
+      </a>
+      <a
+        routerLink="/employees/new"
+        class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-500"
+      >
+        Add employee
+      </a>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <p class="text-slate-600">Loading…</p>
+  } @else if (error()) {
+    <p class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-800">{{ error() }}</p>
+  } @else if (employees().length === 0) {
+    <p class="text-slate-600">No employees yet. <a routerLink="/employees/new" class="text-indigo-600 underline">Add one</a>.</p>
+  } @else {
+    <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
+      <table class="min-w-full divide-y divide-slate-200 text-left text-sm">
+        <thead class="bg-slate-50">
+          <tr>
+            <th class="px-4 py-3 font-medium text-slate-700">Name</th>
+            <th class="px-4 py-3 font-medium text-slate-700">Email</th>
+            <th class="px-4 py-3 font-medium text-slate-700">Department</th>
+            <th class="px-4 py-3 font-medium text-slate-700">Designation</th>
+            <th class="px-4 py-3 font-medium text-slate-700">Salary</th>
+            <th class="px-4 py-3 font-medium text-slate-700"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          @for (e of employees(); track e.id) {
+            <tr class="hover:bg-slate-50/80">
+              <td class="px-4 py-3 text-slate-900">{{ e.first_name }} {{ e.last_name }}</td>
+              <td class="px-4 py-3 text-slate-600">{{ e.email }}</td>
+              <td class="px-4 py-3 text-slate-600">{{ e.department }}</td>
+              <td class="px-4 py-3 text-slate-600">{{ e.designation }}</td>
+              <td class="px-4 py-3 text-slate-600">{{ e.salary | number: '1.0-0' }}</td>
+              <td class="px-4 py-3">
+                <a [routerLink]="['/employees', e.id]" class="text-indigo-600 hover:underline">View</a>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
