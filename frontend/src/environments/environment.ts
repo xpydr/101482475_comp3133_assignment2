@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  graphqlUrl: 'http://localhost:4000/graphql'
+  graphqlUrl: 'https://101482475comp3133assignment2-production.up.railway.app/graphql'
 };
